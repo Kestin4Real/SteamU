@@ -29,7 +29,27 @@ video, Opus audio and raw controller reports over UDP.
 
 ## Quick start
 
-### 1. Build (on the PC)
+### 1. Get SteamU
+
+**Option A: download a release.** From the
+[latest release](https://github.com/Kestin4Real/SteamU/releases/latest),
+download these files into one folder on the PC:
+* `steamu-host`
+* `steamu-deck`
+* `60-steamu.rules`
+* `steamu-modules.conf`
+
+Then make the programs executable:
+
+```bash
+chmod +x steamu-host steamu-deck
+```
+
+The prebuilt `steamu-host` is built for Linux Mint 22 / Ubuntu 24.04 and
+uses that system's FFmpeg 6.1. On other distributions, build from source
+instead. `steamu-deck` runs on any SteamOS 3.6 or newer.
+
+**Option B: build from source** (on the PC):
 
 ```bash
 sudo apt install build-essential cmake ninja-build pkg-config \
@@ -52,8 +72,8 @@ This loads the kernel's USB/IP virtual host controller at boot and lets
 members of `plugdev` plug a virtual USB device into it:
 
 ```bash
-sudo cp packaging/60-steamu.rules /etc/udev/rules.d/
-sudo cp packaging/steamu-modules.conf /etc/modules-load.d/steamu.conf
+sudo cp packaging/60-steamu.rules /etc/udev/rules.d/          # release: 60-steamu.rules
+sudo cp packaging/steamu-modules.conf /etc/modules-load.d/steamu.conf  # release: steamu-modules.conf
 sudo udevadm control --reload
 sudo modprobe -r vhci-hcd; sudo modprobe vhci-hcd
 ```
@@ -67,7 +87,7 @@ Enable SSH on the Deck (in Desktop Mode: `passwd`, then
 `sudo systemctl enable --now sshd`) and copy the single-file app over:
 
 ```bash
-scp build/steamu-deck deck@steamdeck:~/steamu-deck
+scp build/steamu-deck deck@steamdeck:~/steamu-deck   # release: scp steamu-deck ...
 ```
 
 In Desktop Mode, add `~/steamu-deck` to Steam with **Add a Non-Steam Game**
@@ -76,7 +96,8 @@ Steam doesn't act on the controls.
 
 ### 4. Play
 
-1. On the PC, run `./build/steamu-host`.
+1. On the PC, run `./build/steamu-host` (or `./steamu-host` from a
+   release).
 2. On the Deck, launch SteamU from Game Mode. It finds the PC by itself
    (or set the launch option `--host 192.168.x.y`) and shows your monitor.
 3. Steam on the PC lists a **Steam Deck** controller under Settings →
