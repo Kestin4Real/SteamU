@@ -256,7 +256,8 @@ The protocol is small and documented at the top of `steamu_screen.h`:
 * **Fixed sizes:** every message must be sent with exactly the struct size
   from the header (e.g. `sus_attach_msg` is 152 bytes), padding included.
 
-The SteamU Companion Minecraft mod (a separate repository) implements the
+The [SteamU Companion](https://github.com/Kestin4Real/SteamU-MC-Companion)
+Minecraft mod implements the
 protocol in pure Java (`ScreenClient.java`) and is a good reference for
 JVM or other managed languages. It renders with OpenGL, reads back
 asynchronously and uses exclusive controls while in game.

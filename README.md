@@ -144,8 +144,9 @@ header with no dependencies: see the
 `build/steamu-screentest` is a ready-made example: it draws a pattern, a dot
 under each finger and clicks on every touch.
 
-The first real user is **SteamU Companion**, a Minecraft (Fabric) mod in a
-separate repository. It puts your inventory, hotbar, armor, crafting and
+The first real user is
+**[SteamU Companion](https://github.com/Kestin4Real/SteamU-MC-Companion)**, a
+Minecraft (Fabric) mod. It puts your inventory, hotbar, armor, crafting and
 chests on the Deck's touchscreen while you play on the PC with the Deck's
 controls.
 
