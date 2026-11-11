@@ -1,0 +1,8 @@
+build/
+build-*/
+.cache/
+compile_commands.json
+third_party/*.tar.*
+.vscode/
+.idea/
+*.swp

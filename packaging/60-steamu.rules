@@ -1,0 +1,25 @@
+# SteamU udev rules (install on the PC)
+#
+#   sudo cp packaging/60-steamu.rules /etc/udev/rules.d/
+#   sudo cp packaging/steamu-modules.conf /etc/modules-load.d/steamu.conf
+#   sudo udevadm control --reload
+#   sudo modprobe -r vhci-hcd; sudo modprobe vhci-hcd
+#
+# Security note: these rules let your desktop user create virtual input
+# devices (a virtual USB device can be any device, keyboards included).
+# This is the same kind of access Steam's own rules grant for /dev/uinput.
+
+# USB/IP virtual host controller: members of "plugdev" may attach/detach
+# virtual USB devices. steamu-host uses this to plug in a virtual
+# Steam Deck controller that Steam recognizes.
+ACTION=="add", SUBSYSTEM=="platform", KERNEL=="vhci_hcd.*", \
+    RUN+="/bin/chgrp plugdev /sys%p/attach /sys%p/detach", \
+    RUN+="/bin/chmod 0220 /sys%p/attach /sys%p/detach"
+
+# Fallback mode (steamu-host --uhid): let the logged-in user create
+# virtual HID devices.
+KERNEL=="uhid", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uhid"
+
+# Make the virtual Steam Deck controller readable by Steam and SDL games.
+# (The steam-devices package usually covers this already.)
+SUBSYSTEM=="hidraw", KERNELS=="*:28DE:1205.*", MODE="0660", TAG+="uaccess"
